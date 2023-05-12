@@ -1,0 +1,24 @@
+//<button type="button" id="GetFile">Download</button>
+
+// 'https://ajaysh6rm6profile-bucket.s3.amazonaws.com/AjaySharmaCV.pdf' 
+// 'https://d3po247hen37pb.cloudfront.net/echo-digital-tribe/pdfs/echoapp_gratitude.pdf'
+const getFileButton = $('#GetFile');
+const pdfurl = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/172905/test.pdf';
+getFileButton.on('click', async function (event) {
+	event.preventDefault();
+	try {
+		const response = await fetch(pdfurl);
+		const blob = await response.blob();
+		const url = window.URL.createObjectURL(blob);
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = 'ajay-sharma-cv.pdf';
+		document.body.append(link);
+		link.click();
+		link.remove();
+		window.URL.revokeObjectURL(url);
+	} catch (error) {
+		console.error('Error : ' + error);
+	}
+});
+
